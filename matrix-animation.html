@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital  Matrix Animation - Pure code no image</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: black;
+            color: #00FF00;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .rain {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .column {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            white-space: nowrap;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% { top: -100%; }
+            100% { top: 100%; }
+        }
+
+        @keyframes shine {
+            0%, 100% { color: #00FF00; }
+            50% { color: #FFFFFF; }
+        }
+
+        .char {
+            display: block;
+            animation: shine 0.5s infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="rain"></div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const rain = document.querySelector('.rain');
+            const columns = Math.floor(window.innerWidth / 20);
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+=-[]{}|;:,.<>?';
+
+            for (let i = 0; i < columns; i++) {
+                const column = document.createElement('div');
+                column.classList.add('column');
+                column.style.left = `${i * 20}px`;
+                column.style.animationDuration = `${Math.random() * 3 + 3}s`;
+
+                const columnHeight = Math.floor(Math.random() * 20 + 10);
+                for (let j = 0; j < columnHeight; j++) {
+                    const char = document.createElement('div');
+                    char.classList.add('char');
+                    char.style.animationDelay = `${Math.random() * 2}s`;
+                    char.textContent = chars[Math.floor(Math.random() * chars.length)];
+                    column.appendChild(char);
+                }
+
+                rain.appendChild(column);
+            }
+        });
+    </script>
+</body>
+</html>
